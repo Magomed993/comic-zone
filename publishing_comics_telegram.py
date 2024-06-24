@@ -4,7 +4,7 @@ import random
 import argparse
 import time
 from pathlib import Path
-from publication_telegram_bot import publishes_photo
+from publication_telegram_bot import publishes_comics
 from helper_script import download_file
 from dotenv import load_dotenv
 
@@ -44,10 +44,10 @@ def main():
         else:
             path = Path(f'images/comic_{args.number}.png')
             download_file(get_image(args.number), path)
-            publishes_photo(telega_api, path, chat_id)
+            publishes_comics(telega_api, path, chat_id)
             path.unlink(missing_ok=False)
             break
-        publishes_photo(telega_api, path, chat_id)
+        publishes_comics(telega_api, path, chat_id)
         path.unlink(missing_ok=False)
         time.sleep(seconds)
 

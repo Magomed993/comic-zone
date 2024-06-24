@@ -3,7 +3,7 @@ import os
 import random
 import shutil
 import argparse
-from publication_telegram_bot import publishes_photo
+from publication_telegram_bot import publishes_comics
 from helper_script import download_file
 from dotenv import load_dotenv
 
@@ -40,7 +40,7 @@ def main():
     else:
         path = f'images/comic_{args.number}.png'
         download_file(get_image(args.number), path)
-    publishes_photo(telega_api, path, chat_id)
+    publishes_comics(telega_api, path, chat_id)
     shutil.rmtree('images', ignore_errors=False)
 
 
