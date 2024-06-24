@@ -1,4 +1,3 @@
-import requests
 import os
 import random
 import argparse
@@ -7,22 +6,7 @@ from pathlib import Path
 from publication_telegram_bot import publishes_comics
 from helper_script import download_file
 from dotenv import load_dotenv
-
-
-def get_latest_xkcd_comic_number():
-    url = 'https://xkcd.com/info.0.json'
-    response = requests.get(url)
-    response.raise_for_status()
-    latest_issue_comic = response.json()['num']
-    return latest_issue_comic
-
-
-def get_image(comic_number):
-    url = f'https://xkcd.com/{comic_number}/info.0.json'
-    response = requests.get(url)
-    response.raise_for_status()
-    image = response.json()['img']
-    return image
+from helper_script import get_latest_xkcd_comic_number, get_image
 
 
 def main():
