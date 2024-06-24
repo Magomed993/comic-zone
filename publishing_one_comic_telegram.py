@@ -33,15 +33,17 @@ def main():
         Есть возможность отправить конкретный комикс прописав дополнительный аргумент с номером комикса''')
     parse.add_argument('-n', '--number', help='comic number')
     args = parse.parse_args()
-    if args.number is None:
-        random_number = random.randint(1, get_latest_xkcd_comic_number())
-        path = f'images/comic_{random_number}.png'
-        download_file(get_image(random_number), path)
-    else:
-        path = f'images/comic_{args.number}.png'
-        download_file(get_image(args.number), path)
-    publishes_comics(telega_api, path, chat_id)
-    shutil.rmtree('images', ignore_errors=False)
+    try:
+        if args.number is None:
+            random_number = random.randint(1, get_latest_xkcd_comic_number())
+            path = f'images/comic_{random_number}.png'
+            download_file(get_image(random_number), path)
+        else:
+            path = f'images/comic_{args.number}.png'
+            download_file(get_image(args.number), path)
+        publishes_comics(telega_api, path, chat_id)
+    finally:
+        shutil.rmtree('images', ignore_errors=False)
 
 
 if __name__ == '__main__':

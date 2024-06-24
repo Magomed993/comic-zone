@@ -37,18 +37,20 @@ def main():
     args = parse.parse_args()
     while True:
         os.makedirs('images', exist_ok=True)
-        if args.number is None:
-            random_number = random.randint(1, get_latest_xkcd_comic_number())
-            path = Path(f'images/comic_{random_number}.png')
-            download_file(get_image(random_number), path)
-        else:
-            path = Path(f'images/comic_{args.number}.png')
-            download_file(get_image(args.number), path)
+        path = None
+        try:
+            if args.number is None:
+                random_number = random.randint(1, get_latest_xkcd_comic_number())
+                path = Path(f'images/comic_{random_number}.png')
+                download_file(get_image(random_number), path)
+            else:
+                path = Path(f'images/comic_{args.number}.png')
+                download_file(get_image(args.number), path)
+                publishes_comics(telega_api, path, chat_id)
+                break
             publishes_comics(telega_api, path, chat_id)
+        finally:
             path.unlink(missing_ok=False)
-            break
-        publishes_comics(telega_api, path, chat_id)
-        path.unlink(missing_ok=False)
         time.sleep(seconds)
 
 
