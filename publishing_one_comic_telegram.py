@@ -2,7 +2,7 @@ import os
 import random
 import shutil
 import argparse
-from publication_telegram_bot import publishes_comics
+from publication_telegram_bot import sends_comics
 from helper_script import download_file
 from dotenv import load_dotenv
 from helper_script import get_latest_xkcd_comic_number, get_image
@@ -25,7 +25,7 @@ def main():
         else:
             path = f'images/comic_{args.number}.png'
             download_file(get_image(args.number), path)
-        publishes_comics(telega_api, path, chat_id)
+        sends_comics(telega_api, path, chat_id)
     finally:
         shutil.rmtree('images', ignore_errors=False)
 

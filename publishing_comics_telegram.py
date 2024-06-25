@@ -3,7 +3,7 @@ import random
 import argparse
 import time
 from pathlib import Path
-from publication_telegram_bot import publishes_comics
+from publication_telegram_bot import sends_comics
 from helper_script import download_file
 from dotenv import load_dotenv
 from helper_script import get_latest_xkcd_comic_number, get_image
@@ -30,9 +30,9 @@ def main():
             else:
                 path = Path(f'images/comic_{args.number}.png')
                 download_file(get_image(args.number), path)
-                publishes_comics(telega_api, path, chat_id)
+                sends_comics(telega_api, path, chat_id)
                 break
-            publishes_comics(telega_api, path, chat_id)
+            sends_comics(telega_api, path, chat_id)
         finally:
             path.unlink(missing_ok=False)
         time.sleep(seconds)
